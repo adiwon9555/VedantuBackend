@@ -9,7 +9,13 @@ var Inventory=mongoose.model('Inventory',{
         type:Number,
         required:true,
         default:1,
-        min:0
+        // min:1
+        validate: {
+            validator: function(v) {
+              return v>=0;
+            },
+            message: 'Less or no items in inventory'
+          }
     },
     price:{
         type:Number,

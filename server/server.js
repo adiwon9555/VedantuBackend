@@ -18,15 +18,19 @@ app.use(bodyParser.json());
 
 updateInventory = (products) => {
     return Promise.all(products.map(product => {
-        return Inventory.findByIdAndUpdate(product.product, { $inc: { remainingProducts: -product.quantity } }, { new: true }).then((inventory) => {
-            if (!inventory) {
-                return Promise.reject()
-            }
-                
-             return Promise.resolve(inventory)
-        }, err => {
-              return Promise.reject(err)
+        return Inventory.findById(product.product).then(i=>{
+            return Inventory.findByIdAndUpdate(product.product, { $set: { remainingProducts: i.remainingProducts-product.quantity } }, { new: true,runValidators: true }).then((inventory) => {
+                if (!inventory) {
+                    return Promise.reject()
+                }
+                    
+                 return Promise.resolve(inventory)
+            }, err => {
+                  return Promise.reject(err)
+            })
+
         })
+        
     }));
 
 }
