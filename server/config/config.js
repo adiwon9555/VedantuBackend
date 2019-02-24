@@ -2,10 +2,15 @@
 var env=process.env.NODE_ENV || 'development';
 if(env === 'test')
 {
-    process.env.PORT=3000;
+    //For aws
+    process.env.PORT=80;
+    //For local
+//     process.env.PORT=3000;
     process.env.MONGODB_URI='mongodb://localhost:27017/VShoppingTest'
 }else if(env === 'development')
 {
-    process.env.PORT=3000;
+    rocess.env.PORT=80;
+    //For local
+//     process.env.PORT=3000;
     process.env.MONGODB_URI='mongodb://localhost:27017/VShopping'
 }
